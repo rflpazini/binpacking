@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Distribute Challenge</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <header class="col-md-12">
+                <h1 class="page-header">How I fit this?</h1>
+            </header>
+        </div>
+        <div class="row">
+            <article class="col-md-8">
+                <div class="text-center">
+                    <canvas width="500" height="500"></canvas>
+                </div>
+            </article>
+            <aside class="col-md-4">
+                <p>Total box: <span class="lead" id="total-box"></span> </p>
+                <p>Box inside the truck: <span class="lead" id="box-inside"></span></p>
+            </aside>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/js/packing.js"></script>
+    <script>
+    let context = document.querySelector("canvas").getContext("2d");
+    context.rect(0, 0, 300, 192);
+    context.stroke();
+
+    let blocksi = [{
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 54,
+        h: 42
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }, {
+        w: 42,
+        h: 54
+    }];
+
+    let pack = new Packing(300, 192);
+    let counter = 0;
+
+    blocksi.sort(function(a, b) {
+        return (b.h < a.h);
+    });
+
+    pack.fit(blocksi);
+
+
+
+    for (var n = 0; n < blocksi.length; n++) {
+        var block = blocksi[n];
+        if (block.fit) {
+            createRect(block.fit.x, block.fit.y, block.w, block.h);
+            counter++;
+        }
+    }
+
+    writeValues(blocksi.length, counter);
+
+    function writeValues(total, inside) {
+        document.getElementById("total-box").innerHTML = total;
+        document.getElementById("box-inside").innerHTML = inside;
+    }
+
+    function createRect(x, y, w, h) {
+        context.fillStyle = "red";
+        context.rect(x, y, w, h);
+        context.fillRect(x, y, w, h);
+        context.stroke();
+    }
+    </script>
+</body>
+
+</html>
